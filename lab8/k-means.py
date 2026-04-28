@@ -1,7 +1,11 @@
+import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.datasets import load_iris
 from sklearn.cluster import KMeans
+
+#df = pd.read_csv(r"C:/Users/pc/Documents/Nitish093/lab8/IRIS (1).csv")
+#X = df.iloc[:, :4].values
 
 iris = load_iris()
 X = iris.data
