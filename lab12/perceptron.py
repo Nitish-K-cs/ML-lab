@@ -1,7 +1,12 @@
 import numpy as np 
  
+
 def sigmoid(x): 
     return 1 / (1 + np.exp(-x)) 
+
+
+def step_function(x):
+    return np.where(x >= 0, 1, 0)
  
 class Perceptron: 
     def __init__(self, input_size): 
@@ -10,10 +15,11 @@ class Perceptron:
  
     def forward(self, inputs): 
         total_input = np.dot(inputs, self.weights) + self.bias 
+        #output = step_function(total_input)
         output = sigmoid(total_input) 
         return output 
  
-    def train(self, X, y, epochs=1000, learning_rate=0.1): 
+    def train(self, X, y, epochs=100, learning_rate=0.1): 
         for epoch in range(epochs): 
             for i in range(X.shape[0]): 
                 output = self.forward(X[i]) 
@@ -28,15 +34,30 @@ y_or = np.array([0, 1, 1, 1])
 perceptron_and = Perceptron(input_size=2) 
 perceptron_or = Perceptron(input_size=2) 
  
-perceptron_and.train(X_and, y_and, epochs=1000, learning_rate=0.1) 
-perceptron_or.train(X_and, y_or, epochs=1000, learning_rate=0.1) 
+perceptron_and.train(X_and, y_and, epochs=100, learning_rate=0.1) 
+perceptron_or.train(X_and, y_or, epochs=100, learning_rate=0.1) 
  
 print("AND Function Predictions:")
 for i in range(X_and.shape[0]):
-    pred = perceptron_and.forward(X_and[i]).item()  # Extract scalar value
+    pred = perceptron_and.forward(X_and[i]).item()  
     print(f"Input: {X_and[i]} - Predicted Output: {round(pred)}")
 
 print("\nOR Function Predictions:")
 for i in range(X_and.shape[0]):
-    pred = perceptron_or.forward(X_and[i]).item()  # Extract scalar value
+    pred = perceptron_or.forward(X_and[i]).item()  
     print(f"Input: {X_and[i]} - Predicted Output: {round(pred)}")
+    
+    
+code = """
+AND Function Predictions:
+Input: [0 0] - Predicted Output: 0
+Input: [0 1] - Predicted Output: 0
+Input: [1 0] - Predicted Output: 0
+Input: [1 1] - Predicted Output: 1
+
+OR Function Predictions:
+Input: [0 0] - Predicted Output: 0
+Input: [0 1] - Predicted Output: 1
+Input: [1 0] - Predicted Output: 1
+Input: [1 1] - Predicted Output: 1
+"""
